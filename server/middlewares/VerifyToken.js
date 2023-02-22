@@ -3,8 +3,17 @@
 import auth from "../config/firebase-config.js";
 
 export const VerifyToken = async (req, res, next) => {
-  console.log(req.headers.authorization.split(" ")[1])
-  const token = req.headers.authorization.split(" ")[1];
+
+  let token;
+  
+  if (req.headers.authorization) {
+    token = req.headers.authorization.split(" ")[1];
+    console.log(req.headers.authorization.split(" ")[1])
+  } else {
+    console.log(req.header.authorization)
+    return res.json({ message: "Authorization header not present" });
+  }
+
 
   try {
     const decodeValue = await auth.verifyIdToken(token);

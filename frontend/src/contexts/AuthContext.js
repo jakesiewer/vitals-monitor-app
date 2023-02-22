@@ -1,11 +1,10 @@
 // AuthContext.js
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { signOut } from "firebase/auth";
-
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    signOut
 } from "firebase/auth";
 
 import auth from "../config/firebase";
@@ -19,6 +18,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     function register(email, password) {
         // If the new account was created, the user is signed in automatically.
@@ -44,6 +44,8 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
+        error,
+        setError,
         login,
         register,
         logout,

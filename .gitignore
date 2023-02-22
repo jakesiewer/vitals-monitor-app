@@ -35,3 +35,7 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# environment variables
+.env
+./server/config/serviceAccountKey.json

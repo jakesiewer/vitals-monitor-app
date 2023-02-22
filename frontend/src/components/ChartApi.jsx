@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import LineChart from "./LineChart";
+import LineChart from "./chart/ScrubberChart";
 
 function ChartApi() {
     const [chart, setChart] = useState({

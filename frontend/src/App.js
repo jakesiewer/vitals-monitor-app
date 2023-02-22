@@ -10,14 +10,16 @@ import Journal from "./components/layouts/Journal"
 import Profile from "./components/accounts/Profile";
 import WithPrivateRoute from "./utils/WithPrivateRoute";
 import Header from "./components/layouts/Header";
+import ErrorMessage from "./components/layouts/ErrorMessage";
 import ChartApi from "./components/ChartApi";
-import LineChart from "./components/LineChart";
+import ScrubberChart from "./components/chart/ScrubberChart";
 
 function App() {
     return (
         <AuthProvider>
             <Router>
                 <Header />
+                <ErrorMessage />
                 <Routes>
                     <Route exact path="/register" element={<Register />} />
                     <Route exact path="/login" element={<Login />} />

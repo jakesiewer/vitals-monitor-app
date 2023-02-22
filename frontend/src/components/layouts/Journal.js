@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useAuth } from "../../contexts/AuthContext";
+import { InsertData } from '../../services/JournalService';
 
 export default function Home() {
     const { currentUser } = useAuth();
@@ -28,8 +29,11 @@ export default function Home() {
             // setLoading(true);
             // await login(email, password);
             // navigate("/profile");
+            InsertData(value);
+
         } catch (e) {
             alert("Failed to submit");
+            console.log(e)
         }
 
         // setLoading(false);

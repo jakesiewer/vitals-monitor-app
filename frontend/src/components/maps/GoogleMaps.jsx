@@ -1,24 +1,57 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 
 const mapStyles = {
-  width: '100%',
+  width: '75%',
   height: '100%'
 };
 
 export class MapContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      current: {
+        lat: 53.3813477,
+        lng: -6.5990704
+      }
+    };
+  }
+
   state = {
-    showingInfoWindow: false,  // Hides or shows the InfoWindow
-    activeMarker: {},          // Shows the active marker upon click
-    selectedPlace: {}          // Shows the InfoWindow to the selected place upon a marker
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {},
+    markers: [],
+    placeName: ''
   };
 
-  onMarkerClick = (props, marker, e) =>
+  onMapClick = (mapProps, map, clickEvent) => {
+    // console.log(this.props);
+    this.setState({ markers: [], showingInfoWindow: false });
+    const geocoder = new window.google.maps.Geocoder();
+    const location = new window.google.maps.LatLng(clickEvent.latLng.lat(), clickEvent.latLng.lng());
+    geocoder.geocode({ location }, (results, status) => {
+      if (status === 'OK') {
+        this.setState({ placeName: results[0].formatted_address });
+      }
+    });
+    const newMarker = {
+      position: {
+        lat: clickEvent.latLng.lat(),
+        lng: clickEvent.latLng.lng()
+      }
+    };
+    this.setState({ markers: [newMarker] });
+  }
+
+  onMarkerClick = (props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
+  }
 
   onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -30,6 +63,31 @@ export class MapContainer extends Component {
   };
 
   render() {
+    const { markers, placeName } = this.state;
+    // const [ current, setCurrent ] = useState()
+
+    // this.useEffect(() => { 
+    //   setCurrent({
+    //     lat: 53.3813477,
+    //     lng: -6.5990704
+    //   })
+    //   // console.log(data[0].lat) + ", " + data[0].lng)
+    // }, [current]);
+
+    // console.log(this.props)
+    if (this.props.data !== undefined) {
+      // const data = JSON.parse(this.props.data);
+      console.log(this.props.data[0])
+      // this.setState(
+      //   {
+      //     current: {
+      //       lat: data[0].lat,
+      //       lng: data[0].lng
+      //     }
+      //   })
+      // console.log(this.state.current.lat)
+    }
+
     return (
       <Map
         google={this.props.google}
@@ -41,20 +99,30 @@ export class MapContainer extends Component {
             lng: -6.5990704
           }
         }
+      // onClick={this.onMapClick}
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          name={'Maynooth University Library'}
-        />
+        {/* {markers.map((marker, index) => ( */}
+          <Marker
+            // key={index}
+            // position={marker.position}
+            position={
+              {
+                lat: this.props.data[0],
+                lng: this.props.data[1]
+              }
+            }
+          // onClick={this.onMarkerClick}
+          />
+        {/* ))}
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
           onClose={this.onClose}
         >
           <div>
-            <h4>{this.state.selectedPlace.name}</h4>
+            <h4>{placeName}</h4>
           </div>
-        </InfoWindow>
+        </InfoWindow> */}
       </Map>
     );
   }

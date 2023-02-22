@@ -11,7 +11,7 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { currentUser, login } = useAuth();
+    const { currentUser, login, setError } = useAuth();
     
     useEffect(() => {
         if (currentUser) {
@@ -23,11 +23,12 @@ export default function Login() {
         e.preventDefault();
 
         try {
+            setError("");
             setLoading(true);
             await login(email, password);
-            navigate("/profile");
+            navigate("/home");
         } catch (e) {
-            alert("Failed to login");
+            setError("Failed to login");
         }
 
         setLoading(false);

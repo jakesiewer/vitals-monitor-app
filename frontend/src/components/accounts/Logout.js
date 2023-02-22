@@ -15,12 +15,12 @@ export default function Logout({ modal, setModal }) {
 
   async function handleLogout() {
     try {
-      // setError("");
+      setError("");
       await logout();
       setModal(false);
       navigate("/login");
     } catch {
-      // setError("Failed to logout");
+      setError("Failed to logout");
     }
   }
 
