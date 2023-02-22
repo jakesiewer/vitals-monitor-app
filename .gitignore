@@ -6,7 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 
 ## account key
-./serviceAccountKey.json
+serviceAccountKey.json
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
@@ -38,4 +38,3 @@ typings/
 
 # environment variables
 .env
-./server/config/serviceAccountKey.json
