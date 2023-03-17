@@ -13,6 +13,7 @@
     "firebase": "^9.12.1",
     "google-maps-react": "^2.0.6",
     "react": "^18.2.0",
+    "react-calendar": "^4.0.0",
     "react-dom": "^18.2.0",
     "react-oauth2-hook": "^1.0.12",
     "react-router-dom": "^6.4.2",

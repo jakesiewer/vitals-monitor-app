@@ -16,8 +16,11 @@ import admin from 'firebase-admin';
 
 export const insertJournal = async (req, res) => {
     const data = req.body;
+    const uid = req.headers.uid;
+    console.log(uid)
+    // const newJournalRef = push(ref("data", `${uid}/journals`));
     console.log(data);
-    const dbRef = admin.database().ref('data');
+    const dbRef = admin.database().ref(`${uid}/journals`);
     dbRef.push(data)
       .then(() => {
         res.send('Data inserted successfully!');
@@ -28,7 +31,7 @@ export const insertJournal = async (req, res) => {
       });
 };
 
-export const getJournal = async (req, res) => {
+export const getJournalId = async (req, res) => {
     try {
         const journal = await JournalEntry.find({
             journalId: req.params.journalId,
@@ -40,3 +43,85 @@ export const getJournal = async (req, res) => {
         });
     }
 };
+
+export const getJournalTimestamp = async (req, res) => {
+    try{
+
+    } catch(error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    };
+}
+
+export const getJournal = async (req, res) => {
+  const db = admin.database();
+  const dataId = req.query.uid;
+  const timestamp = req.query.timestamp;
+  const date = dateToDateObj(timestamp);
+  const dataRef = db.ref('journals');
+
+  try {
+    const snapshot = await dataRef.child(dataId).once('value');
+    const message = snapshot.val();
+    const userId = snapshot.key;
+
+    if (!message) {
+      console.log("Not Found")
+      return res.status(404).json({ error: 'Message not found' });
+    }
+    else if(date == 'Invalid Date')
+    {
+      return res.status(400).json({ error: 'Invalid Date' });
+    }
+    else if (userId !== req.query.uid) {
+      console.log("Unauthorized");
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+    else {
+      const unixTimestamp = date.getTime();
+      const dbRef = db.ref(`journals/${userId}`);
+      // const timestampToFind = 1677006100606;
+      const query = dbRef.orderByChild('timestamp').startAt(unixTimestamp).limitToFirst(1);
+
+      query.once('value')
+        .then(snapshot => {
+          let closestEntry = snapshot.val();
+          closestEntry = formatJournal(closestEntry);
+
+          res.json(closestEntry);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  } catch (error) {
+    console.error(error);
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+function dateToDateObj (timestamp)
+{
+  const parts = timestamp.split(/[\/,: ]/); // split string into date and time components
+  const [datePart, timePart] = timestamp.split(", ");
+  const [day, month, year] = datePart.split("/");
+  const [hour, minute, second] = timePart.split(":");
+
+  const dateObj = new Date(year, month - 1, day, hour, minute, second); // months are zero indexed
+
+  console.log(dateObj)
+  return dateObj;
+}
+
+function formatJournal(journal) 
+{
+  const key = Object.keys(journal)[0]; // extract the key of the first object
+  let data = journal[key];
+
+  data.activities = data.activities.join(', ');
+  data.negative = data.negative.join(', ');
+  data.positive = data.positive.join(', ');
+
+  return data;
+}

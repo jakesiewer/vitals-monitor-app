@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
-import RechartContext from '../../contexts/RechartContext';
-import GoogleMaps from '../maps/GoogleMaps';
-import eventBus from '../tracker/ActivityData';
+import React, { useState, useEffect } from 'react';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import EventEmitter from 'events';
 import fitbitEventBus from '../tracker/FitbitActivityData';
-// import rechartContext from '../../contexts/rechartContext';
+import GoogleMaps from '../maps/GoogleMaps';
+import { getCurrentJournal } from '../../services/JournalService';
 
-const initialData = [{ name: 'Page A', Lat: 53.3837370, Lng: -6.5941090, HR: 85, amt: 160 }, { name: 'Page B', HR: 110, Lat: 53.3849580, Lng: -6.5974880, amt: 160 }, { name: 'Page C', HR: 100, Lat: 53.3841190, Lng: -6.6000700, amt: 160 }, { name: 'Page D', HR: 68, Lat: 53.3838070, Lng: -6.5999090, amt: 160 }, { name: 'Page E', HR: 58, Lat: 53.3838200, Lng: -6.5999130, amt: 160 }, { name: 'Page F', HR: 76, Lat: 53.3838200, Lng: -6.5999130, amt: 160 }, { name: 'Page G', HR: 82, Lat: 53.3838200, Lng: -6.5999130, amt: 160 }, { name: 'Page H', HR: 70, Lat: 53.3838200, Lng: -6.5999130, amt: 160 }, { name: 'Page I', HR: 90, Lat: 53.3838200, Lng: -6.5999130, amt: 160 }];
+// const journalEventBus = new EventEmitter();
+export const journalEventBus = new EventEmitter();
+export const mapEventBus = new EventEmitter();
+
+const initialData = [{ name: 'No Data', Lat: 0, Lng: 0, HR: 0, amt: 160 }];
 // const data = [{ name: 'Page A', Lat: 53.3837370, Lng: -6.5941090, HR: 85 }, { name: 'Page B', Lat: 53.3849580, Lng: -6.5974880, HR: 110 }, { name: 'Page C', Lat: 53.3841190, Lng: -6.6000700, HR: 100 }, { name: 'Page D', Lat: 53.3838070, Lng: -6.5999090, HR: 68 }, { name: 'Page E', Lat: 53.3838200, Lng: -6.5999130, HR: 58 }];
 
 
@@ -29,7 +32,7 @@ const ScrubberChart = () => {
 
 	useEffect(() => {
 		fitbitEventBus.on('fitbitDataUpdated', (newData) => {
-			console.log(newData.data)
+			// console.log(newData.data)
 			setData(newData.data);
 		});
 
@@ -38,20 +41,26 @@ const ScrubberChart = () => {
 		};
 	}, [lat, lng]);
 
-	const handleClick = (e) => {
+	const handleClick = async (e) => {
 		try {
 			setLat(e.activePayload[0].payload.Lat);
-			setLng(e.activePayload[0].payload.Lng)
+			setLng(e.activePayload[0].payload.Lng);			
+			
+			mapEventBus.emit('mapDataUpdated', {'lat': e.activePayload[0].payload.Lat, 'lng': e.activePayload[0].payload.Lng});
+
+			const currentJournal = await getCurrentJournal(e.activePayload[0].payload.name);
+			journalEventBus.emit('journalDataUpdated', currentJournal);
 		}
 		catch {
-			console.log("Invalid Click")
+			alert("Invalid Click")
 		}
 	}
 
 	return (
 		<React.Fragment>
-			<LineChart width={730} height={250} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} onClick={handleClick}>
-				{/* <GoogleMaps data={state.location}/> */}
+			<div>
+			<ResponsiveContainer aspect={2}>
+			<LineChart data={data} margin={{ top: 5, right: 5, left: 0, bottom: 5 }} onClick={handleClick}>
 				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis dataKey="name" tick={{ fontSize: 12 }}/>
 				<YAxis />
@@ -60,18 +69,12 @@ const ScrubberChart = () => {
 				<Line type="monotone" dataKey="HR" stroke="#8884d8" dot={{ r: 0 }}/>
 				{/* <Line type="monotone" dataKey="Lng" stroke="#82ca9d" /> */}
 			</LineChart>
-			<GoogleMaps data={[lat, lng]} />
+			</ResponsiveContainer>
+			</div>
+			{/* <GoogleMaps data={[lat, lng]} /> */}
 		</React.Fragment>
 	);
 };
-
-export function DataProvider(props) {
-	return (
-		<RechartContext.Provider value={props.data}>
-			{props.children}
-		</RechartContext.Provider>
-	);
-}
 
 export default ScrubberChart;
 

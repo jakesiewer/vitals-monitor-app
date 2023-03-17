@@ -8,9 +8,7 @@ export const VerifyToken = async (req, res, next) => {
   
   if (req.headers.authorization) {
     token = req.headers.authorization.split(" ")[1];
-    console.log(req.headers.authorization.split(" ")[1])
   } else {
-    console.log(req.header.authorization)
     return res.json({ message: "Authorization header not present" });
   }
 
@@ -19,12 +17,12 @@ export const VerifyToken = async (req, res, next) => {
     const decodeValue = await auth.verifyIdToken(token);
     if (decodeValue) {
       req.user = decodeValue;
-      console.log(req.user)
+      console.log(req.user);
+      res.status(200).json({ message: "Authenticated" });
       return next();
     }
   } catch (e) {
-    return res.json({ message: "Internal Error" });
-  }
+    return res.status(401).json({ message: "Access token invalid" });  }
 };
 
 export const VerifySocketToken = async (socket, next) => {
@@ -35,6 +33,7 @@ export const VerifySocketToken = async (socket, next) => {
 
     if (decodeValue) {
       socket.user = decodeValue;
+      console.log("yo");
       console.log(socket.user)
       return next();
     }

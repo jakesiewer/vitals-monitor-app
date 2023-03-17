@@ -26,17 +26,17 @@ dotenv.config();
 
 const corsOptions = {
   // Access-Control-Allow-Headers: true,
-  origin:'http://localhost:3000', 
+  origin: 'http://localhost:3000',
   // methods: ['GET', 'PUT', 'POST'],
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200,
+  credentials: true,            //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
 }
 
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// app.use(VerifyToken);
+app.use("/auth", VerifyToken);
 
 const PORT = process.env.PORT || 8080;
 
@@ -45,14 +45,14 @@ const PORT = process.env.PORT || 8080;
 
 
 const server = app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+  console.log(`Server listening on port ${PORT}`);
 });
 
 const io = new Server(server, {
-    cors: {
-        origin: "http://localhost:3000",
-        credentials: true,
-    },
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true,
+  },
 });
 
 io.use(VerifySocketToken);
@@ -96,7 +96,7 @@ io.on("connection", (socket) => {
 // io.use(VerifySocketToken);
 
 app.get("/", (req, res) => {
-    res.send("working fine");
+  res.send("working fine");
 });
 
 app.use(cookieParser());
@@ -108,6 +108,46 @@ app.use("/api", fitbitAuthRoutes);
 app.use("/api", fitbitActivityRoutes);
 
 app.use("/journal", insertJournalRoute);
+
+
+// import admin from "firebase-admin";
+// app.get('/test', async (req, res) => {
+//   const db = admin.database();
+//   const dataId = req.query.uid;
+
+//   const dataRef = db.ref('journals');
+//   // const dataId = "-NOpIA_15iTG_co6W3-3";
+
+//   try {
+//     const snapshot = await dataRef.child(dataId).once('value');
+//     const message = snapshot.val();
+
+//     if (!message) {
+//       console.log("Not Found")
+//       return res.status(404).json({ error: 'Message not found' });
+//     }
+
+//     const userId = message;
+//     // const userId = "nxeSe83GCLaBSqK0XkE7c0CjLCx1";
+
+//     console.log(userId);
+//     console.log(req.query.uid);
+
+
+//     if (userId !== req.query.uid) {
+//       // if (userId !== userId) {
+//       console.log("Unauthorized");
+//       return res.status(403).json({ error: 'Unauthorized' });
+//     }
+
+//     res.json(message);
+//   } catch (error) {
+//     console.error(error);
+//     console.log(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
 
 // import listEndpoints from "express-list-endpoints";
 // console.log(listEndpoints(app))

@@ -30,8 +30,9 @@ export default function Header() {
             Authorization: `Bearer ${token}`,
           },
         };
-        const res = await fetch("http://localhost:3001", payloadHeader);
+        const res = await fetch("http://localhost:3001/auth", payloadHeader);
         console.log(await res.text());
+        console.log(currentUser);
       } catch (e) {
         console.log(e);
         navigate("/login");
@@ -44,11 +45,11 @@ export default function Header() {
 
   return (
     <>
-      <nav className="px- px-2 sm:px-4 py-2.5 bg-gray-50 border-gray-200 dark:bg-gray-800 dark:border-gray-700 text-gray-900 text-sm rounded border dark:text-white">
+      <nav className="mb-12 px-2 sm:px-4 py-2.5 bg-slate-100 border-gray-200 dark:bg-gray-800 dark:border-gray-700 text-gray-900 text-sm rounded border dark:text-white">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
           <Link to="/home" className="flex">
-            <span className="self-center text-lg font-semibold whitespace-nowrap text-gray-900 dark:text-white font-sans">
-              Vitals Monitor
+            <span className="self-center text-xl font-semibold whitespace-nowrap text-slate-600 dark:text-white font-sans">
+              Lifelog
             </span>
           </Link>
           <div className="flex md:order-2">
@@ -58,19 +59,19 @@ export default function Header() {
               <>
                 <Link
                   to="/home"
-                  className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-full text-sm p-2.5"
+                  className="text-slate-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-full text-sm p-2.5"
                 >
                   <HomeIcon className="w-8 h-8 rounded-full" aria-hidden="true"></HomeIcon>
                 </Link>
                 <Link
                   to="/journal"
-                  className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-full text-sm p-2.5"
+                  className="text-slate-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-full text-sm p-2.5"
                 >
                   <PencilAltIcon className="w-8 h-8 rounded-full" aria-hidden="true"></PencilAltIcon>
                 </Link>
                 <Link
                   to="/profile"
-                  className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-full text-sm p-2.5"
+                  className="text-slate-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-full text-sm p-2.5"
                 >
                   <UserIcon className="w-8 h-8 rounded-full" aria-hidden="true"></UserIcon>
                   {/* <img
@@ -80,7 +81,7 @@ export default function Header() {
                   /> */}
                 </Link>
                 <button
-                  className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg text-sm p-2.5"
+                  className="text-slate-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg text-sm p-2.5"
                   onClick={() => setModal(true)}
                 >
                   <LogoutIcon className="h-8 w-8 rounded-full" aria-hidden="true" />

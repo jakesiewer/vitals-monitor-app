@@ -37,5 +37,5 @@ export const fitbitCallback = async (req, res) => {
     });
     const accessToken = response.data.access_token;
     console.log(accessToken);
-    res.redirect(`http://localhost:3000/home?access_token=${accessToken}`);
+    res.redirect(`${ frontendUri }?access_token=${ accessToken }`);
 };

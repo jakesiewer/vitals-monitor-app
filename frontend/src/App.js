@@ -11,8 +11,6 @@ import Profile from "./components/accounts/Profile";
 import WithPrivateRoute from "./utils/WithPrivateRoute";
 import Header from "./components/layouts/Header";
 import ErrorMessage from "./components/layouts/ErrorMessage";
-import ChartApi from "./components/ChartApi";
-import ScrubberChart from "./components/chart/ScrubberChart";
 
 function App() {
     return (

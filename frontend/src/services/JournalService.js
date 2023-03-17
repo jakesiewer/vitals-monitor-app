@@ -1,6 +1,6 @@
-// import axios from "axios";
+// import { useState } from "react";
+import axios from "axios";
 import auth from "../config/firebase";
-// import { io } from "socket.io-client";
 import { ref, set, push, serverTimestamp } from "firebase/database"
 
 import { getDB } from "../config/firebase";
@@ -10,7 +10,7 @@ const baseURL = "http://localhost:3001/journal";
 const getUserToken = async () => {
     const user = auth.currentUser;
     const token = user && (await user.getIdToken());
-    return token;
+    return user.uid;
 };
 
 // export const initiateSocketConnection = async () => {
@@ -41,7 +41,7 @@ const getUserToken = async () => {
 
 export const InsertData = async (journal) => {
     let db = await getDB();
-    const newJournalRef = push(ref(db, `${auth.currentUser.uid}/journals`));
+    const newJournalRef = push(ref(db, `journals/${auth.currentUser.uid}`));
     const data = { ...journal, timestamp: serverTimestamp() };
 
     set(newJournalRef, data)
@@ -54,6 +54,39 @@ export const InsertData = async (journal) => {
             alert("Unsuccessful, error");
         });
 };
+
+export const getCurrentJournal = async (timestamp) => {
+
+    const uid = await getUserToken();
+
+    if (timestamp === "No Data")
+    {
+        alert("No Data");
+
+        return;
+    }
+
+    try {
+        // const { currentUser } = useAuth();
+        const response = await axios.get(
+            "http://localhost:3001/journal/",
+            {
+                params: {
+                    "uid": uid,
+                    "timestamp": timestamp
+                }
+            }
+        );
+        // const keys = Object.keys(response.data);
+        // console.log(response.data[keys[0]]);
+        // setData(response.data);
+        // journalEventBus.emit('journalDataUpdated', response);
+        // setJournal(response.data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // export const InsertData = async (data) => {
 //     const journal = { ...data, timestamp: serverTimestamp() };

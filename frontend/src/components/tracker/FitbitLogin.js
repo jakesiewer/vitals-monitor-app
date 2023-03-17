@@ -24,14 +24,14 @@ const FitbitLogin = () => {
 
     return (
         <>
-            <h2 className="mt-4 text-2xl tracking-tight font-light dark:text-white">Log in with Fitbit</h2>
+            <h2 className="mt-4 mb-2 text-2xl tracking-tight font-light text-slate-600 dark:text-white">Log in with Fitbit</h2>
             {accessToken ? (
                 <div>
-                    <p>You are logged in with Fitbit!</p>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogout}>Log out</button>
+                    <p className='mb-2 text-slate-600'>You are logged in with Fitbit!</p>
+                    <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogout}>Log out</button>
                 </div>
             ) : (
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogin}>Log in with Fitbit</button>
+                <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogin}>Log in with Fitbit</button>
             )}
         </>
     );
