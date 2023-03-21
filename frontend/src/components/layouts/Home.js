@@ -74,56 +74,57 @@ export default function Home() {
                 </div>
             </div>
             ) : (<></>)} */}
-<div className="container mx-auto p-4">
-  <div className="flex flex-col md:flex-row">
-    <div className="md:w-3/4 md:mr-24 mb-6 md:mb-0">
-      <div className="mb-6 bg-white rounded-3xl shadow-lg">
-        {currentUser && (
-          <>
-            <h2 className="pt-6 pl-12 text-2xl tracking-tight font-light dark:text-white">Heart Rate</h2>
-            <div className="p-6">
-              <ScrubberChart />
+            <div className='bg-stone-50 pt-12'>
+                <div className="container mx-auto p-4">
+                    <div className="flex flex-col md:flex-row">
+                        <div className="md:w-3/4 md:mr-24 mb-6 md:mb-0">
+                            <div className="mb-6 bg-white rounded-3xl shadow-lg">
+                                {currentUser && (
+                                    <>
+                                        <h2 className="pt-6 pl-12 text-2xl tracking-tight font-light dark:text-white">Heart Rate</h2>
+                                        <div className="p-6">
+                                            <ScrubberChart />
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                            <div className="mb-6 bg-white rounded-3xl shadow-lg">
+                                {currentUser && (
+                                    <>
+                                        <h2 className="pt-6 pl-12 text-2xl tracking-tight font-light dark:text-white">Map</h2>
+                                        <div className="p-6">
+                                            <GoogleMaps />
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                        <div className="md:w-1/4 order-first md:order-last">
+                            <div className="mb-6 bg-white rounded-3xl shadow-lg">
+                                {currentUser && (
+                                    <>
+                                        <div className="pt-6 pl-8">
+                                            <FitbitLogin />
+                                        </div>
+                                        <div className="pt-2 pl-8 pb-2">
+                                            <FitbitActivityList />
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                            <div className="mb-4 bg-white rounded-3xl shadow-lg">
+                                {currentUser && (
+                                    <>
+                                        <div className="pt-2 pl-8 pb-2">
+                                            <CurrentJournal />
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </>
-        )}
-      </div>
-      <div className="mb-6 bg-white rounded-3xl shadow-lg">
-        {currentUser && (
-          <>
-            <h2 className="pt-6 pl-12 text-2xl tracking-tight font-light dark:text-white">Map</h2>
-            <div className="p-6">
-              <GoogleMaps />
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-    <div className="md:w-1/4 order-first md:order-last">
-      <div className="mb-6 bg-white rounded-3xl shadow-lg">
-        {currentUser && (
-          <>
-            <div className="pt-6 pl-8">
-              <FitbitLogin />
-            </div>
-            <div className="pt-2 pl-8 pb-2">
-              <FitbitActivityList />
-            </div>
-          </>
-        )}
-      </div>
-      <div className="mb-4 bg-white rounded-3xl shadow-lg">
-        {currentUser && (
-          <>
-            <div className="pt-2 pl-8 pb-2">
-              <CurrentJournal />
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  </div>
-</div>
-
 
         </>
     );

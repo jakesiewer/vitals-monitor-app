@@ -80,7 +80,7 @@ export const CurrentJournal = () => {
                                 <p className="p-3 text-[10px] text-gray-400">{journal.journal[0]}</p>
                             </div>
                             <h2 className="font-medium text-gray-400 pb-4">Further Comments:&nbsp;</h2><div className="rounded-lg border-solid border border-gray-300 mb-4">
-                                <p>{journal.comments[0]}</p>
+                                <p className="p-3 text-[10px] text-gray-400">{journal.comments[0]}</p>
                             </div></>
                     ) : (
                         <h2 className="text-gray-400 font-medium" >No Journal</h2>

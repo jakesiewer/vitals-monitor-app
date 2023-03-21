@@ -5,7 +5,7 @@ import { ref, set, push, serverTimestamp } from "firebase/database"
 
 import { getDB } from "../config/firebase";
 
-const baseURL = "http://localhost:3001/journal";
+const baseURL = "http://localhost:3001/journal/";
 
 const getUserToken = async () => {
     const user = auth.currentUser;
@@ -69,7 +69,7 @@ export const getCurrentJournal = async (timestamp) => {
     try {
         // const { currentUser } = useAuth();
         const response = await axios.get(
-            "http://localhost:3001/journal/",
+            `${baseURL}/nearest`,
             {
                 params: {
                     "uid": uid,
@@ -82,6 +82,33 @@ export const getCurrentJournal = async (timestamp) => {
         // setData(response.data);
         // journalEventBus.emit('journalDataUpdated', response);
         // setJournal(response.data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getAllJournals = async (timestamp) => {
+
+    const uid = await getUserToken();
+
+    if (timestamp === "No Data")
+    {
+        alert("No Data");
+
+        return;
+    }
+
+    try {
+        const response = await axios.get(
+            `${baseURL}/all`,
+            {
+                params: {
+                    "uid": uid,
+                    "timestamp": timestamp
+                }
+            }
+        );
         return response.data;
     } catch (error) {
         console.log(error);
