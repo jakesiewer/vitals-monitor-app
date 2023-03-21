@@ -39,7 +39,7 @@ The goal of this project is to develop a **mental awareness app** that **tracks 
     ![Fitbit Login](/assets/fitbit_login.png)
     <br>
 5. Select different points on the chart to monitor your location and journal at that point
-<br>
+    <br>
     ![Chart](/assets/chart.png)
     ![Map](/assets/map.png)
     ![Journal](/assets/journal.png)
