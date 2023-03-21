@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import { AuthProvider } from "./contexts/AuthContext";
+import About from "./components/layouts/About";
 import Register from "./components/accounts/Register";
 import Login from "./components/accounts/Login";
 import Home from "./components/layouts/Home"
@@ -19,6 +20,7 @@ function App() {
                 <Header />
                 <ErrorMessage />
                 <Routes>
+                    <Route exact path="/" element={<About />} />
                     <Route exact path="/register" element={<Register />} />
                     <Route exact path="/login" element={<Login />} />
                     <Route
