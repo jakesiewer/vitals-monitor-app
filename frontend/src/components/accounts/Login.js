@@ -12,7 +12,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { currentUser, login, setError } = useAuth();
-    
+
     useEffect(() => {
         if (currentUser) {
             navigate("/");

@@ -55,11 +55,7 @@ const LoginSection = () => {
               },
             };
             const res = await fetch("http://localhost:3001/auth", payloadHeader);
-            console.log(await res.text());
-            console.log(currentUser);
-          } catch (e) {
-            console.log(e);    
-          }
+          } catch (e) {}
         };
     
         fetchData();
@@ -91,7 +87,7 @@ const LoginSection = () => {
 
     return (
         <>
-            {!currentUser && (
+            {currentUser.currentUser == null && (
                 <section className="text-center">
                     <div className="flex justify-center items-center">
                         <button
@@ -110,7 +106,7 @@ const LoginSection = () => {
                         </button>
                     </div>
                 </section>
-            )};
+            )}
         </>
     );
 };
@@ -118,7 +114,7 @@ const LoginSection = () => {
 const HeroSection = () => {
     return (
         <section className="text-center py-8">
-            <h1 className="text-4xl font-light mb-4">About Our Website</h1>
+            <h1 className="text-4xl font-light mb-4">About Lifelog</h1>
             <p className="text-lg text-slate-600">
                 Learn about what our website does and how it can help you.
             </p>
@@ -168,7 +164,7 @@ const TeamSection = () => {
         <section className="text-center py-8">
             <h2 className="text-2xl font-light mb-4">Our Team</h2>
             <p className="text-lg text-slate-600">
-                Meet the talented individuals behind our website and learn more about their roles and expertise.
+                Meet the individuals behind Lifelog and learn more about their roles and expertise.
             </p>
             <div className="flex justify-center items-center mt-8">
                 {teamMembers.map((member, index) => (

@@ -35,8 +35,6 @@ export default function Header() {
         console.log(currentUser);
       } catch (e) {
         console.log(e);
-        navigate("/login");
-
       }
     };
 
