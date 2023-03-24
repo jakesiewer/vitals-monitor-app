@@ -28,10 +28,10 @@ const FitbitLogin = () => {
             {accessToken ? (
                 <div>
                     <p className='mb-2 text-slate-600'>You are logged in with Fitbit!</p>
-                    <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogout}>Log out</button>
+                    <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogout}>Log Out</button>
                 </div>
             ) : (
-                <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogin}>Log in with Fitbit</button>
+                <button className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogin}>Log In</button>
             )}
         </>
     );

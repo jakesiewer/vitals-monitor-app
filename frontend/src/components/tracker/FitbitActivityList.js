@@ -31,8 +31,13 @@ const FitbitActivityList = () => {
                 after: convertCalendarDate(selectedDate)
             }
         });
-        setActivities(response.data);
-        console.log(response)
+        if (response.data.length == 0) {
+            alert("No activity data found, please select a valid date");
+        }
+        else {
+            console.log(response.data)
+            setActivities(response.data);
+        }
     };
 
     const convertCalendarDate = (dateString) => {
@@ -77,6 +82,7 @@ const FitbitActivityList = () => {
                 <CalendarIcon
                     className="inline-block w-12 h-12 rounded-full text-sky-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none text-sm p-2.5"
                     aria-hidden="true"
+                    role="img"
                     onClick={() => setShowCalendar(!showCalendar)}
                 />
             </div>

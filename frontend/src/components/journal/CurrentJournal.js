@@ -3,9 +3,6 @@ import { journalEventBus } from '../chart/ScrubberChart';
 
 import { useAuth } from '../../contexts/AuthContext';
 
-// const journalEventBus = new EventEmitter();
-// export default journalEventBus;
-
 export const CurrentJournal = () => {
     const [journal, setJournal] = useState();
 
@@ -26,32 +23,6 @@ export const CurrentJournal = () => {
     useEffect(() => {
         console.log(journal);
     }, [journal]);
-
-
-    // const formatJournal = (journal) => {
-    //     foreach
-    // }
-    // const getCurrentJournal = async () => {
-    //     try {
-    //         // const { currentUser } = useAuth();
-    //         const response = await axios.get(
-    //             "http://localhost:3001/test",
-    //             {
-    //                 params: {
-    //                     "uid": "nxeSe83GCLaBSqK0XkE7c0CjLCx1",
-    //                     "timestamp": "25/02/2023, 16:55:36"
-    //                 }
-    //             }
-    //         );
-    //         console.log(response.data);
-    //         // setData(response.data);
-    //         // journalEventBus.emit('journalDataUpdated', response);
-    //         setJournal(response.data);
-    //         return response;
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
 
     return (
         <>
