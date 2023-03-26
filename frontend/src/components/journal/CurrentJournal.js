@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { journalEventBus } from '../chart/ScrubberChart';
 
-import { useAuth } from '../../contexts/AuthContext';
+// import { useAuth } from '../../contexts/AuthContext';
 
 export const CurrentJournal = () => {
     const [journal, setJournal] = useState();
 
     useEffect(() => {
-        // const fetchData = async () => {
         journalEventBus.on('journalDataUpdated', (currentJournal) => {
 
             setJournal(currentJournal);
@@ -16,8 +15,6 @@ export const CurrentJournal = () => {
         return () => {
             journalEventBus.off('journalDataUpdated', () => () => { });
         };
-        // }
-        // fetchData();
     });
 
     useEffect(() => {

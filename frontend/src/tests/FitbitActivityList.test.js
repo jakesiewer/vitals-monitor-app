@@ -61,17 +61,4 @@ describe('FitbitActivityList', () => {
         // Clean up the localStorage after the test
         localStorage.removeItem('fitbit_access_token');
     });
-
-    //   it('opens and closes the calendar when the calendar icon is clicked', () => {
-    //     render(<FitbitActivityList />);
-    //     const calendarIcon = screen.getByRole('img', { hidden: true });
-    //     fireEvent.click(calendarIcon);
-
-    //     expect(screen.getByRole('grid')).toBeInTheDocument();
-
-    //     fireEvent.click(calendarIcon);
-    //     expect(screen.queryByRole('grid')).not.toBeInTheDocument();
-    //   });
-
-
 });

@@ -62,29 +62,24 @@ export const getCurrentJournal = async (timestamp) => {
     if (timestamp === "No Data")
     {
         alert("No Data");
-
         return;
     }
-
-    try {
-        // const { currentUser } = useAuth();
-        const response = await axios.get(
-            `${baseURL}/nearest`,
-            {
-                params: {
-                    "uid": uid,
-                    "timestamp": timestamp
+    else {
+        try {
+            // const { currentUser } = useAuth();
+            const response = await axios.get(
+                `${baseURL}/nearest`,
+                {
+                    params: {
+                        "uid": uid,
+                        "timestamp": timestamp
+                    }
                 }
-            }
-        );
-        // const keys = Object.keys(response.data);
-        // console.log(response.data[keys[0]]);
-        // setData(response.data);
-        // journalEventBus.emit('journalDataUpdated', response);
-        // setJournal(response.data);
-        return response.data;
-    } catch (error) {
-        console.log(error);
+            );
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

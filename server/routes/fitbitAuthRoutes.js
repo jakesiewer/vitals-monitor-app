@@ -3,7 +3,6 @@ import { fitbitLogin, fitbitCallback } from "../controllers/fitbitAuthController
 
 const router = express.Router();
 
-
 router.get("/fitbit-login", fitbitLogin);
 router.get('/fitbit-callback', fitbitCallback);
 

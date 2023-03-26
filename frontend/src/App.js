@@ -50,12 +50,6 @@ function App() {
                 </Routes>
             </Router>
         </AuthProvider>
-        // <div className="container my-4">
-        //     <h1>CHART</h1>
-        //     <LineChart />
-        //     <ChartApi />
-        //     {/* <AddChart /> */}
-        // </div>
     );
 }
 

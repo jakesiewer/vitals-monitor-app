@@ -48,46 +48,46 @@ const server = app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    credentials: true,
-  },
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//   },
+// });
 
-io.use(VerifySocketToken);
+// io.use(VerifySocketToken);
 
-global.onlineUsers = new Map();
+// global.onlineUsers = new Map();
 
-const getKey = (map, val) => {
-  for (let [key, value] of map.entries()) {
-    if (value === val) return key;
-  }
-};
+// const getKey = (map, val) => {
+//   for (let [key, value] of map.entries()) {
+//     if (value === val) return key;
+//   }
+// };
 
-io.on("connection", (socket) => {
-  global.chatSocket = socket;
+// io.on("connection", (socket) => {
+//   global.chatSocket = socket;
 
-  socket.on("addUser", (userId) => {
-    onlineUsers.set(userId, socket.id);
-    socket.emit("getUsers", Array.from(onlineUsers));
-  });
+//   socket.on("addUser", (userId) => {
+//     onlineUsers.set(userId, socket.id);
+//     socket.emit("getUsers", Array.from(onlineUsers));
+//   });
 
-  socket.on("sendMessage", ({ senderId, receiverId, message }) => {
-    const sendUserSocket = onlineUsers.get(receiverId);
-    if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("getMessage", {
-        senderId,
-        message,
-      });
-    }
-  });
+//   socket.on("sendMessage", ({ senderId, receiverId, message }) => {
+//     const sendUserSocket = onlineUsers.get(receiverId);
+//     if (sendUserSocket) {
+//       socket.to(sendUserSocket).emit("getMessage", {
+//         senderId,
+//         message,
+//       });
+//     }
+//   });
 
-  socket.on("disconnect", () => {
-    onlineUsers.delete(getKey(onlineUsers, socket.id));
-    socket.emit("getUsers", Array.from(onlineUsers));
-  });
-});
+//   socket.on("disconnect", () => {
+//     onlineUsers.delete(getKey(onlineUsers, socket.id));
+//     socket.emit("getUsers", Array.from(onlineUsers));
+//   });
+// });
 
 // app.use(VerifyToken);
 

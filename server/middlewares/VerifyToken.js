@@ -33,7 +33,6 @@ export const VerifySocketToken = async (socket, next) => {
 
     if (decodeValue) {
       socket.user = decodeValue;
-      console.log("yo");
       console.log(socket.user)
       return next();
     }

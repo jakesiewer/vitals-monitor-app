@@ -20,16 +20,16 @@ const ScrubberChart = () => {
 		});
 
 		return () => {
-			fitbitEventBus.off('fitbitDataUpdated', () => () => {}) ;
+			fitbitEventBus.off('fitbitDataUpdated', () => () => { });
 		};
 	}, [lat, lng]);
 
 	const handleClick = async (e) => {
 		try {
 			setLat(e.activePayload[0].payload.Lat);
-			setLng(e.activePayload[0].payload.Lng);			
-			
-			mapEventBus.emit('mapDataUpdated', {'lat': e.activePayload[0].payload.Lat, 'lng': e.activePayload[0].payload.Lng});
+			setLng(e.activePayload[0].payload.Lng);
+
+			mapEventBus.emit('mapDataUpdated', { 'lat': e.activePayload[0].payload.Lat, 'lng': e.activePayload[0].payload.Lng });
 
 			const currentJournal = await getCurrentJournal(e.activePayload[0].payload.name);
 			journalEventBus.emit('journalDataUpdated', currentJournal);
@@ -40,20 +40,20 @@ const ScrubberChart = () => {
 	}
 
 	return (
-		<React.Fragment>
+		<>
 			<div>
-			<ResponsiveContainer aspect={2}>
-			<LineChart data={data} margin={{ top: 5, right: 5, left: 0, bottom: 5 }} onClick={handleClick}>
-				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis dataKey="name" tick={{ fontSize: 12 }}/>
-				<YAxis />
-				<Tooltip />
-				<Legend />
-				<Line type="monotone" dataKey="HR" stroke="#8884d8" dot={{ r: 0 }}/>
-			</LineChart>
-			</ResponsiveContainer>
+				<ResponsiveContainer aspect={2}>
+					<LineChart data={data} margin={{ top: 5, right: 5, left: 0, bottom: 5 }} onClick={handleClick}>
+						<CartesianGrid strokeDasharray="3 3" />
+						<XAxis dataKey="name" tick={{ fontSize: 12 }} />
+						<YAxis />
+						<Tooltip />
+						<Legend />
+						<Line type="monotone" dataKey="HR" stroke="#8884d8" dot={{ r: 0 }} />
+					</LineChart>
+				</ResponsiveContainer>
 			</div>
-		</React.Fragment>
+		</>
 	);
 };
 

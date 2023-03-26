@@ -1,7 +1,6 @@
 import express from 'express';
-// import { getFitbitActivities, getFibitActivityData } from '../controllers/stravaActivityController.js';
-import { getFitbitActivities, getFibitActivityStream } from '../controllers/fitbitActivityController.js';
 
+import { getFitbitActivities, getFibitActivityStream } from '../controllers/fitbitActivityController.js';
 
 const router = express.Router();
 
